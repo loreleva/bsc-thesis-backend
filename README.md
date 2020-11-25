@@ -1,4 +1,4 @@
-# bsc-thesis-backend
+# Bakcend
 This is the Docker of the backend that i made during my internship.
 
 # Database
