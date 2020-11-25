@@ -4,8 +4,8 @@ This is the Docker of the backend that i made during my internship.
 # Database
 The PostgreSQL database is implemented in the ```./db/sql/create.d``` folder.
 - ```domains.sql``` contains the commands for the creation of the domains used in the database.
-- ```functions.sql``` contains the trigger implemented in PLpgSQL
-- ```relSchema.sql``` contains the commands for the creation of the tables
+- ```functions.sql``` contains the trigger implemented in PLpgSQL.
+- ```relSchema.sql``` contains the commands for the creation of the tables.
 
 # APIs
 The RESTful APIs are implemented in the ```./api/vd``` folder.
