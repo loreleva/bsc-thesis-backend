@@ -1,0 +1,5 @@
+flask-restful
+flask_expects_json
+flask
+psycopg2
+requests

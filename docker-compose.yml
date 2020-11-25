@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  api:
+    build: ./api
+    depends_on:
+      - "db"
+    volumes:
+      - ./api/vd:/code
+    ports:
+      - 8888:80
+    links:
+      - db
+
+  db:
+    build: ./db
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data: {}
