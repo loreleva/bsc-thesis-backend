@@ -2,7 +2,8 @@
 This is the Docker of the backend that I made during my internship.
 To run the program, launch the command ```docker-compose up```, from the project directory where is present the file ```docker-compose.yml```.
 
-Once launched the docker, the APIs can be tested using the python file ```debug.py```, inside the docker of the API, at the path ```code/debug.py```.
+Once launched the docker, the APIs can be tested using the python file ```debug.py```. 
+The file is placed inside the docker of the APIs, at the path ```code/debug.py```.
 
 # Database
 The PostgreSQL database is implemented in the ```./db/sql/create.d``` folder.
