@@ -30,14 +30,14 @@ def add_case(DB, start, stepsize, description, user):
 		description="'"+description+"'"
 	cur.execute("""
 		INSERT INTO public.relcase
-		VALUES (DEFAULT,{},{})
+		VALUES (DEFAULT,{})
 		RETURNING relcase.id
-	""".format(start,stepsize))
+	""".format(stepsize))
 	res = cur.fetchone()
 	cur.execute("""
 		INSERT INTO public.retrospectivecase
-		VALUES ({},{},{})
-	""".format(res['id'],description,user))
+		VALUES ({},{},{},{})
+	""".format(res['id'],description,start,user))
 	DB['conn'].commit()
 	return res
 
@@ -45,7 +45,7 @@ def add_case(DB, start, stepsize, description, user):
 
 def get_cases(DB):
 	cur = DB['cur']
-	cur.execute("""SELECT c.id, c.start::smallstring, c.stepsize_s, rc.description, rc.sub FROM public.relcase c, public.retrospectivecase rc WHERE c.id=rc.id""")
+	cur.execute("""SELECT c.id, rc.start::smallstring, c.stepsize_s, rc.description, rc.sub FROM public.relcase c, public.retrospectivecase rc WHERE c.id=rc.id""")
 	res = cur.fetchall()
 	if res == None:
 		res = []
@@ -55,7 +55,7 @@ def get_cases(DB):
 
 def get_cases_user(DB, user):
 	cur = DB['cur']
-	cur.execute("""SELECT c.id, c.start::smallstring, c.stepsize_s, rc.description FROM public.relcase c, public.retrospectivecase rc WHERE rc.sub={} AND rc.id=c.id""".format(user))
+	cur.execute("""SELECT c.id, rc.start::smallstring, c.stepsize_s, rc.description FROM public.relcase c, public.retrospectivecase rc WHERE rc.sub={} AND rc.id=c.id""".format(user))
 	res = cur.fetchall()
 	if res == None:
 		res = []
@@ -65,7 +65,7 @@ def get_cases_user(DB, user):
 
 def get_case_info(DB, id):
 	cur = DB['cur']
-	cur.execute("""SELECT c.id, c.start::smallstring, c.stepsize_s, rc.description, rc.sub FROM public.relcase c, public.retrospectivecase rc WHERE c.id={} AND c.id=rc.id""".format(id))
+	cur.execute("""SELECT c.id, rc.start::smallstring, c.stepsize_s, rc.description, rc.sub FROM public.relcase c, public.retrospectivecase rc WHERE c.id={} AND c.id=rc.id""".format(id))
 	res = cur.fetchone()
 	if res==None:
 		return {}
@@ -82,8 +82,8 @@ def modify_case(DB, id, start, stepsize, description):
 		description="NULL"
 	else:
 		description = "'"+description+"'"
-	cur.execute("""UPDATE public.relcase c SET start={},stepsize_s={} WHERE c.id={}""".format(start,stepsize,id))
-	cur.execute("""UPDATE public.retrospectivecase rc SET description={} WHERE rc.id={}""".format(description,id))
+	cur.execute("""UPDATE public.relcase c SET stepsize_s={} WHERE c.id={}""".format(stepsize,id))
+	cur.execute("""UPDATE public.retrospectivecase rc SET start={}, description={} WHERE rc.id={}""".format(start,description,id))
 	DB['conn'].commit()
 	return 200
 

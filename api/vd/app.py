@@ -45,7 +45,7 @@ class Case(Resource):
 		data = request.get_json(force=True)
 		check_case_form(data)
 		try:
-			return output_json(queries.add_case(DB, data.get('timestamp'), data['stepsize'], data.get('description'), user), 201)
+			return output_json(queries.add_case(DB, data.get('timestamp'), data['stepsize_s'], data.get('description'), user), 201)
 		except psycopg2.Error as e:
 			DB['conn'].rollback()
 			return internal_server_error_db(e)
@@ -106,7 +106,7 @@ class CaseState(Resource):
 		data = request.get_json(force=True)
 		check_case_form(data)
 		try:
-			return queries.modify_case(DB, id, data.get('timestamp'), data['stepsize'], data.get('description'))
+			return queries.modify_case(DB, id, data.get('timestamp'), data['stepsize_s'], data.get('description'))
 		except psycopg2.Error as e:
 			DB['conn'].rollback()
 			return internal_server_error_db(e)
