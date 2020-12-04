@@ -1,5 +1,6 @@
 # Backend
 This is the Docker of the backend that I made during my internship.
+To run the program, launch the command ```docker-compose up```, from the project directory where is present the file ```docker-compose.yml```.
 
 # Database
 The PostgreSQL database is implemented in the ```./db/sql/create.d``` folder.
